@@ -1,12 +1,20 @@
-#include "AudioTools.h"
-#include "BluetoothA2DPSink.h"
+#include "BluetoothA2DPSink."
+#include "driver/i2s.h"
 
-I2SStream i2s;  // Use I2S output instead of Analog
-BluetoothA2DPSink a2dp_sink(i2s);
+BluetoothA2DPSink a2dp_sink;
 
 void setup() {
-    a2dp_sink.start("MyMusic");
+    i2s_pin_config_t my_pin_config = {
+        .mck_io_num = I2S_PIN_NO_CHANGE,
+        .bck_io_num = 27,
+        .ws_io_num = 26,
+        .data_out_num = 25,
+        .data_in_num = I2S_PIN_NO_CHANGE
+    };
+    a2dp_sink.set_i2s_pin_config(my_pin_config);
+    a2dp_sink.start("BTSpeaker");
 }
 
-void loop() {
+void loop() 
+{
 }
